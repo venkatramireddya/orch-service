@@ -1,0 +1,67 @@
+spring:
+  application:
+    name: orch-service
+server:
+  port: 9002
+  shutdown: graceful  #To enable graceful shutdown
+
+---
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 10s  #Allow graceful  timeout period
+
+
+#Force Enable health probs. Would be enabled on kubernetes platform
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  health:
+    livenessstate:
+      enabled: true  
+    readinessstate:
+      enabled: true
+
+#------------------
+# http properties for rest Template Configuration
+#------------------      
+http:
+  conn:
+    time:
+      to:
+        live: ${http_conn_time_to_live:5}
+      out: ${http_conn_time_out:3000}  
+    request:
+      timeout: ${http_conn_request_timeout:5000}  
+  client:
+    max:
+      conn:
+        route: ${http_client_max_conn_route:50}
+        total: ${http_client_max_conn_total:100}
+  evict:
+    idle:
+      conn: ${http_evict_idle_conn:5}
+  read:
+    time:
+      out: ${http_read_time_out:10000}
+
+#------------------
+# Thread Propertis
+#------------------
+gen:
+  await:
+    term:
+      secs: ${gen_await_term_secs:5} 
+  core:
+    pool: 
+      size: ${gen_core_pool_size:200}
+  keep:
+    alive: 
+      seconds: ${gen_keep_alive_seconds:60}
+  max:
+    pool:
+      size: ${gen_max_pool_size:300}
+  queue: 
+    capacity: ${gen_queue_capacity:100}
+ 
