@@ -17,6 +17,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.apache.httpcomponents:httpclient'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.4.3'
+	//resilience4j
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation 'io.github.resilience4j:resilience4j-spring-boot2:1.7.0'
+	implementation 'io.github.resilience4j:resilience4j-annotations:1.7.0'
+	
+	implementation 'io.github.resilience4j:resilience4j-circuitbreaker:1.7.0'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

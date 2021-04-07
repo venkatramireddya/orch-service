@@ -64,4 +64,40 @@ gen:
       size: ${gen_max_pool_size:300}
   queue: 
     capacity: ${gen_queue_capacity:100}
+    
+#--------------------------
+#Resilience4j Properties
+#-------------------------
+resilience4j:
+  circuitbreaker:
+    configs:
+        default:
+            registerHealthIndicator: true
+            slidingWindowSize: ${circuitbreaker_slidingWindowSize:100}
+            minimum-number-of-calls: ${circuitbreaker_minimum-number-of-calls:20}
+            permittedNumberOfCallsInHalfOpenState: ${circuitbreaker_permittedNumberOfCallsInHalfOpenState:10}
+            waitDurationInOpenState: ${circuitbreaker_waitDurationInOpenState:30s}
+            failureRateThreshold: ${circuitbreaker_failureRateThreshold:25}
+            eventConsumerBufferSize: ${circuitbreaker_eventConsumerBufferSize:100}
+            automatic-transition-from-open-to-half-open-enabled: true
+            ignore-exceptions:
+              HttpClientException               NullPointerException
+              
+            
+        someShared:
+            slidingWindowSize: 50
+            permittedNumberOfCallsInHalfOpenState: 10
+    instances:
+        backendA:
+            baseConfig: default
+            waitDurationInOpenState: 5000
+        backendB:
+            baseConfig: someShared
+---           
+resilience4j:  retry:    configs:      default:
+        max-attempts: 2
+        wait-duration: 100
+        retry-exceptions:          NullPointerException
+    instances:      retry:
+        base-config: default
  
