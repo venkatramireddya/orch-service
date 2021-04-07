@@ -97,7 +97,7 @@ resilience4j:
 resilience4j:  retry:    configs:      default:
         max-attempts: 2
         wait-duration: 100
-        retry-exceptions:          NullPointerException
+        retry-exceptions:          HttpClientException
     instances:      retry:
         base-config: default
  
