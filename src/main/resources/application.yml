@@ -22,7 +22,12 @@ management:
       enabled: true  
     readinessstate:
       enabled: true
-
+---
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  health:    circuitbreakers:      enabled: true    ratelimiters:      enabled: true
 #------------------
 # http properties for rest Template Configuration
 #------------------      
@@ -30,7 +35,7 @@ http:
   conn:
     time:
       to:
-        live: ${http_conn_time_to_live:5}
+        live: ${http_conn_time_to_live:5000}
       out: ${http_conn_time_out:3000}  
     request:
       timeout: ${http_conn_request_timeout:5000}  
@@ -67,6 +72,9 @@ gen:
     
 #--------------------------
 #Resilience4j Properties
+#http://localhost:9002/actuator/circuitbreakers
+#http://localhost:9002/actuator/metrics/
+#http://localhost:9002/actuator/metrics/{metric.name}
 #-------------------------
 resilience4j:
   circuitbreaker:
@@ -74,21 +82,21 @@ resilience4j:
         default:
             registerHealthIndicator: true
             slidingWindowSize: ${circuitbreaker_slidingWindowSize:100}
-            minimum-number-of-calls: ${circuitbreaker_minimum-number-of-calls:20}
-            permittedNumberOfCallsInHalfOpenState: ${circuitbreaker_permittedNumberOfCallsInHalfOpenState:10}
+            minimum-number-of-calls: ${circuitbreaker_minimum-number-of-calls:2}
+            permittedNumberOfCallsInHalfOpenState: ${circuitbreaker_permittedNumberOfCallsInHalfOpenState:3}
             waitDurationInOpenState: ${circuitbreaker_waitDurationInOpenState:30s}
-            failureRateThreshold: ${circuitbreaker_failureRateThreshold:25}
+            failureRateThreshold: ${circuitbreaker_failureRateThreshold:5}
             eventConsumerBufferSize: ${circuitbreaker_eventConsumerBufferSize:100}
             automatic-transition-from-open-to-half-open-enabled: true
             ignore-exceptions:
-              HttpClientException               NullPointerException
+              - org.springframework.web.client.HttpClientErrorException
               
             
         someShared:
             slidingWindowSize: 50
             permittedNumberOfCallsInHalfOpenState: 10
     instances:
-        backendA:
+        events_byActorId_repoId:
             baseConfig: default
             waitDurationInOpenState: 5000
         backendB:
@@ -97,7 +105,7 @@ resilience4j:
 resilience4j:  retry:    configs:      default:
         max-attempts: 2
         wait-duration: 100
-        retry-exceptions:          HttpClientException
+        retry-exceptions:          - org.springframework.web.client.HttpClientErrorException
     instances:      retry:
         base-config: default
  
