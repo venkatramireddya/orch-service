@@ -17,6 +17,7 @@ import com.ttech.orch.model.Event;
 import com.ttech.orch.service.EventService;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -30,6 +31,7 @@ public class EventServiceImpl implements EventService {
 	private RestTemplate kafkaRestTemplate;
 
 	@CircuitBreaker(name = "events_byActorId_repoId")
+	@Retry(name ="retry")
 	public ResponseEntity<List<Event>> getEventsByActorIdRepoId(Long repoID,  Long actorID){
 		ResponseEntity<List<Event>> response = null;
 		try {

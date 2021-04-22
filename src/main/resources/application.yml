@@ -103,9 +103,12 @@ resilience4j:
             baseConfig: someShared
 ---           
 resilience4j:  retry:    configs:      default:
-        max-attempts: 2
+        max-attempts: 10
         wait-duration: 100
         retry-exceptions:          - org.springframework.web.client.HttpClientErrorException
+          - org.springframework.web.client.HttpServerErrorException
+          - java.net.ConnectException
+          - org.springframework.web.client.ResourceAccessException
     instances:      retry:
         base-config: default
  
