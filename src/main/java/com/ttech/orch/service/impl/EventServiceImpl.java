@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import com.ttech.orch.controller.EventController;
 import com.ttech.orch.model.Event;
 import com.ttech.orch.service.EventService;
 
