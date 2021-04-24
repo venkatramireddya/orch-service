@@ -20,6 +20,5 @@ public class EventController {
 	@GetMapping(value = "/events/repos/{repoID}/actors/{actorID}")
 	public ResponseEntity<List<Event>> getEventsByActorIdRepoId(@PathVariable Long repoID, @PathVariable Long actorID) {
         return eventService.getEventsByActorIdRepoId(repoID,actorID);
-    }	
-	 	
+    }	 	
 }

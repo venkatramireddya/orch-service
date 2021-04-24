@@ -1,0 +1,23 @@
+resilience4j:
+  circuitbreaker:
+    configs:
+        default:
+            registerHealthIndicator: true
+            slidingWindowSize: 2
+            minimum-number-of-calls: 2
+            permittedNumberOfCallsInHalfOpenState: 2
+            waitDurationInOpenState: 5s
+            failureRateThreshold: 50
+            eventConsumerBufferSize: 100
+            automatic-transition-from-open-to-half-open-enabled: true
+            ignore-exceptions:
+              - org.springframework.web.client.HttpClientErrorException
+              
+---           
+resilience4j:  retry:    configs:      default:
+        max-attempts: 5
+        wait-duration: 100
+        retry-exceptions:          - org.springframework.web.client.HttpClientErrorException
+    instances:      retry:
+        base-config: default
+ 
