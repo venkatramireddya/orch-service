@@ -64,7 +64,7 @@ public class HazelCastConfiguration {
 			
 			config.setInstanceName(INSTANCE_NAME).addMapConfig(
 					new MapConfig().setName(mapName)
-					.setEvictionConfig(new EvictionConfig().setEvictionPolicy(EvictionPolicy.LRU))
+					//.setEvictionConfig(new EvictionConfig().setEvictionPolicy(EvictionPolicy.LRU))
 					.setTimeToLiveSeconds(hazelCastTtl)
 					.setMaxIdleSeconds(hazelCastMaxIdle)
 					);
