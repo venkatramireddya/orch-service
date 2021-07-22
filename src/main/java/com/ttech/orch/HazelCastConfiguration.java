@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import com.hazelcast.config.Config;
-import com.hazelcast.config.EvictionConfig;
-import com.hazelcast.config.EvictionPolicy;
 import com.hazelcast.config.JoinConfig;
 import com.hazelcast.config.MapConfig;
 import com.hazelcast.core.Hazelcast;
@@ -75,4 +73,36 @@ public class HazelCastConfiguration {
 		}
 		return hazelcastInstance;
 	}
+	
+/*	
+	@ConditionalOnProperty(name = "K8", havingValue = "true")
+	@Bean
+	public HazelcastInstance hazelcastInstance() {
+		Config config = new Config();
+		JoinConfig joinConfig = config.getNetworkConfig().getJoin();
+		joinConfig.getMulticastConfig().setEnabled(false);
+		joinConfig.getKubernetesConfig().setEnabled(true);
+
+		config.setInstanceName("test-instanceName")
+				.addMapConfig(new MapConfig().setName(mapName)
+						.setMaxSizeConfig(new MaxSizeConfig(200, MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE))
+						.setEvictionPolicy(EvictionPolicy.LRU).setTimeToLiveSeconds(5000)
+						.setMaxIdleSeconds(hazelcastMaxIdle));
+		return Hazelcast.newHazelcastInstance(config);
+
+	}
+
+	@ConditionalOnProperty(name = "K8",  matchIfMissing = true ,havingValue = "false")
+	@Bean
+	public HazelcastInstance hazelcastLocalInstance() {
+		Config config = new Config();
+		config.setInstanceName("hazelcast-instance")
+				.addMapConfig(new MapConfig().setName(mapName)
+						.setMaxSizeConfig(new MaxSizeConfig(200, MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE))
+						.setEvictionPolicy(EvictionPolicy.LRU).setTimeToLiveSeconds(5000)
+						.setMaxIdleSeconds(hazelcastMaxIdle));
+		return Hazelcast.newHazelcastInstance(config);
+
+	}
+	*/
 }

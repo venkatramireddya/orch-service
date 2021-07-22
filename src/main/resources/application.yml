@@ -111,4 +111,11 @@ resilience4j:  retry:    configs:      default:
           - org.springframework.web.client.ResourceAccessException
     instances:      retry:
         base-config: default
+        
+  
+#hazelcast:
+ # mapName: testMap
+  #Ttl:  120
+  #maxIdle: 120
+  
  
