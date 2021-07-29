@@ -28,6 +28,8 @@ management:
     web:
       exposure:
         include: "*"  health:    circuitbreakers:      enabled: true    ratelimiters:      enabled: true
+    defaults:
+      enabled: true
 #------------------
 # http properties for rest Template Configuration
 #------------------      
