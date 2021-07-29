@@ -32,24 +32,26 @@ management:
 # http properties for rest Template Configuration
 #------------------      
 http:
+  client:
+    conn:
+      time:
+        to:
+          live:
+            minute: ${http_client_conn_time_to_live_minute:5000}
   conn:
-    time:
-      to:
-        live: ${http_conn_time_to_live:5000}
-      out: ${http_conn_time_out:3000}  
+    timeout: ${http_conn_timeout:3000}  
     request:
       timeout: ${http_conn_request_timeout:5000}  
-  client:
     max:
       conn:
-        route: ${http_client_max_conn_route:50}
+        perroute: ${http_client_max_conn_route:50}
         total: ${http_client_max_conn_total:100}
   evict:
     idle:
-      conn: ${http_evict_idle_conn:5}
+      conn:
+        sec: ${http_evict_idle_conn:5}
   read:
-    time:
-      out: ${http_read_time_out:10000}
+    timeout: ${http_read_time_out:10000}
 
 #------------------
 # Thread Propertis

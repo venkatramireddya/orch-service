@@ -24,26 +24,28 @@ import org.springframework.web.client.RestTemplate;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.binder.httpcomponents.PoolingHttpClientConnectionManagerMetricsBinder;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Configuration
 public class RestTemplateConfig {
 
-	@Value("${http.conn.time.to.live}")
+	@Value("${http.client.conn.time.to.live.minute}")
 	private long httpConnTimeToLive;
 
-	@Value("${http.evict.idle.conn}")
+	@Value("${http.evict.idle.conn.sec}")
 	private long httpEvictIdleConn;
 
-	@Value("${http.conn.time.out}")
+	@Value("${http.conn.timeout}")
 	private int httpConntimeOut;
 
-	@Value("${http.read.time.out}")
+	@Value("${http.read.timeout}")
 	private int httpReadTimeOut;
 
 	@Value("${http.conn.request.timeout}")
 	private int httpConnRequestTimeOut;
 
-	@Value("${http.client.max.conn.route}")
+	@Value("${http.client.max.conn.perroute}")
 	private int httpClientMaxConnRoute;
 
 	@Value("${http.client.max.conn.total}")
@@ -54,15 +56,14 @@ public class RestTemplateConfig {
 
 	@Bean
 	public RestTemplate kafkaRestTemplate(RestTemplateBuilder restTemplateBuilder) {
-		// create pooled connection manager and set pool max values and bind the pool
-		// metrics to the meter and registry
+		log.info("httpClientMaxConnRoute:{}, httpClientMaxConnTotal:{}", httpClientMaxConnRoute, httpClientMaxConnTotal);
+		// create pooled connection manager and set pool max values and bind the pool metrics to the meter and registry
 
-		PoolingHttpClientConnectionManager connMgr = new PoolingHttpClientConnectionManager(httpConnTimeToLive,
-				TimeUnit.MINUTES);
+		PoolingHttpClientConnectionManager connMgr = new PoolingHttpClientConnectionManager(httpConnTimeToLive, TimeUnit.MINUTES);
 		connMgr.setDefaultMaxPerRoute(httpClientMaxConnRoute);
 		connMgr.setMaxTotal(httpClientMaxConnTotal);
-		PoolingHttpClientConnectionManagerMetricsBinder binder = new PoolingHttpClientConnectionManagerMetricsBinder(
-				connMgr, "resttemplate-http-client");
+		PoolingHttpClientConnectionManagerMetricsBinder binder = 
+				new PoolingHttpClientConnectionManagerMetricsBinder(connMgr, "resttemplate-http-client");
 		binder.bindTo(registry);
 
 		// create http client using the connection Manager
