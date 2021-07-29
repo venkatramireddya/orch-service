@@ -22,6 +22,9 @@ management:
       enabled: true  
     readinessstate:
       enabled: true
+  endpoints:
+    web:
+      base-path: "/"
 ---
 management:
   endpoints:
