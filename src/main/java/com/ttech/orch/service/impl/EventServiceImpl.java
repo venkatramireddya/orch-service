@@ -49,7 +49,7 @@ public class EventServiceImpl implements EventService {
 	private long hazelcastReadTimeOut;
 	
 	
-	@CircuitBreaker(name = "events_byActorId_repoId")
+	@CircuitBreaker(name = "events_actorid_repoid")
 	@Retry(name ="retry")
 	public ResponseEntity<List<Event>> getEventsByActorIdRepoId(Long repoID,  Long actorID){
 		ResponseEntity<List<Event>> response = null;

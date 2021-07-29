@@ -62,7 +62,7 @@ public class CircuiteBreakerTest {
 	
 	@Test
 	public void testCircuitBreakers() throws Exception{
-		CircuitBreaker circuiteBreaker = circuitBreakerRegistry.circuitBreaker("events_byActorId_repoId");
+		CircuitBreaker circuiteBreaker = circuitBreakerRegistry.circuitBreaker("events_actorid_repoid");
 		System.out.println(circuiteBreaker.getName());
 		System.out.println(circuiteBreaker.getCircuitBreakerConfig().getMinimumNumberOfCalls());
 		
@@ -116,7 +116,7 @@ public class CircuiteBreakerTest {
 	
 	
 	public void testIgnoresNotFoundException() {
-		CircuitBreaker circuiteBreaker = circuitBreakerRegistry.circuitBreaker("events_byActorId_repoId");
+		CircuitBreaker circuiteBreaker = circuitBreakerRegistry.circuitBreaker("events_actorid_repoid");
 		HttpClientErrorException exception = new HttpClientErrorException(HttpStatus.NOT_FOUND);
 		
 		Mockito.when(kafkaRestTemplate.exchange(anyString(), eq(HttpMethod.GET), any(), eq(new ParameterizedTypeReference<List<Event>>() {

@@ -98,7 +98,7 @@ resilience4j:
             slidingWindowSize: 50
             permittedNumberOfCallsInHalfOpenState: 10
     instances:
-        events_byActorId_repoId:
+        events_actorid_repoid:
             baseConfig: default
             waitDurationInOpenState: 5000
         backendB:

@@ -35,7 +35,7 @@ public class Resilience4jConfig {
 	
 	@Bean
 	public Seq<Retry> retry(){
-		log.info("info");
+		log.info("retry");
 		Seq<Retry> retries = retryRegistry.getAllRetries();
 		log.info("Entering Retries() size:{}, name:{}",retries.size(), retryRegistry.getAllRetries() );
 		//Apply event listener for existing retry instances
