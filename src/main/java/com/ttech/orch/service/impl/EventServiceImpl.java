@@ -35,8 +35,8 @@ public class EventServiceImpl implements EventService {
 	ActorServiceImpl actorServiceImpl;
 	
 	@Autowired
-	@Qualifier("kafkaRestTemplate")
-	private RestTemplate kafkaRestTemplate;
+	@Qualifier("eventRestTemplate")
+	private RestTemplate eventRestTemplate;
 	
 	@Autowired
 	HazelcastInstance hazelcastInstance;
@@ -54,7 +54,7 @@ public class EventServiceImpl implements EventService {
 	public ResponseEntity<List<Event>> getEventsByActorIdRepoId(Long repoID,  Long actorID){
 		ResponseEntity<List<Event>> response = null;
 		try {
-			response = kafkaRestTemplate.exchange("http://localhost:9999/events/repos/123/actors/123", HttpMethod.GET,HttpEntity.EMPTY, new ParameterizedTypeReference<List<Event>>() {
+			response = eventRestTemplate.exchange("http://localhost:9999/events/repos/123/actors/123", HttpMethod.GET,HttpEntity.EMPTY, new ParameterizedTypeReference<List<Event>>() {
 			});
 		}catch(HttpClientErrorException e) {
 			e.printStackTrace();
@@ -69,7 +69,7 @@ public class EventServiceImpl implements EventService {
 		 if (value == null) {
 			 ResponseEntity<List<Event>> response = null;
 				try {
-					response = kafkaRestTemplate.exchange("http://localhost:9999/events/repos/123/actors/123", HttpMethod.GET,HttpEntity.EMPTY, new ParameterizedTypeReference<List<Event>>() {
+					response = eventRestTemplate.exchange("http://localhost:9999/events/repos/123/actors/123", HttpMethod.GET,HttpEntity.EMPTY, new ParameterizedTypeReference<List<Event>>() {
 					});
 				}catch(HttpClientErrorException e) {
 					e.printStackTrace();

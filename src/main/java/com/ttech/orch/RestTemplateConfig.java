@@ -55,7 +55,7 @@ public class RestTemplateConfig {
 	MeterRegistry registry;
 
 	@Bean
-	public RestTemplate kafkaRestTemplate(RestTemplateBuilder restTemplateBuilder) {
+	public RestTemplate eventRestTemplate(RestTemplateBuilder restTemplateBuilder) {
 		log.info("httpClientMaxConnRoute:{}, httpClientMaxConnTotal:{}", httpClientMaxConnRoute, httpClientMaxConnTotal);
 		// create pooled connection manager and set pool max values and bind the pool metrics to the meter and registry
 
