@@ -122,4 +122,7 @@ resilience4j:  retry:    configs:      default:
   #Ttl:  120
   #maxIdle: 120
   
- 
+#==========================URLs===================================#
+event:
+  repo:
+    url: ${event_repo_baseurl:http://localhost:8888/event-gateway/}

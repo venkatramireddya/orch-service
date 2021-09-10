@@ -48,6 +48,8 @@ public class EventServiceImpl implements EventService {
 	@Value("${hazelcast.read.timeout.msec:100}")
 	private long hazelcastReadTimeOut;
 	
+	@Value("${event.repo.url}")
+	private String eventRepoUrl;
 	
 	@CircuitBreaker(name = "events_actorid_repoid")
 	@Retry(name ="retry")
@@ -66,10 +68,11 @@ public class EventServiceImpl implements EventService {
 	 public List<Event> getEventsByRepoId(Long repoID) throws Exception {
 		 
 		 List<Event> value = readFromCache(repoID);
+		 String finalUrl= eventRepoUrl+"events/repos/"+repoID;
 		 if (value == null) {
 			 ResponseEntity<List<Event>> response = null;
 				try {
-					response = eventRestTemplate.exchange("http://localhost:9999/events/repos/123/actors/123", HttpMethod.GET,HttpEntity.EMPTY, new ParameterizedTypeReference<List<Event>>() {
+					response = eventRestTemplate.exchange(finalUrl, HttpMethod.GET,HttpEntity.EMPTY, new ParameterizedTypeReference<List<Event>>() {
 					});
 				}catch(HttpClientErrorException e) {
 					e.printStackTrace();

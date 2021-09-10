@@ -28,7 +28,7 @@ public class EventController {
 	
 	
 	//@RolesAllowed("")
-	@PreAuthorize("hasRole('ROLE_USER')")
+	//@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping(value = "/events/repos/{repoID}")
     public List<Event> getEventsByRepoId(@PathVariable Long repoID) throws Exception {
         return eventService.getEventsByRepoId(repoID);
