@@ -2,7 +2,7 @@ spring:
   application:
     name: orch-service
 server:
-  port: 9002
+  port: 9009
   shutdown: graceful  #To enable graceful shutdown
 
 ---

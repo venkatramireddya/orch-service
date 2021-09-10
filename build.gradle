@@ -10,6 +10,7 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 }
 
 ext {
@@ -32,10 +33,18 @@ dependencies {
 	implementation 'com.hazelcast:hazelcast:4.2'
 	implementation 'com.hazelcast:hazelcast-spring:4.2'
 	implementation 'com.hazelcast:hazelcast-kubernetes:2.2.2'
+	//implementation 'com.ttech:ttech-jwt-spring-boot-starter:0.0.1-SNAPSHOT'
+	implementation 'org.springframework.boot:spring-boot-starter-security:2.5.2'
 	
+	//OWASP
+	 implementation ('org.owasp.esapi:esapi:2.2.3.1') {
+	  exclude group : 'org.slf4j', module: 'slf4j-simple'
+	  exclude group : 'log4j', module: 'log4j'
+	 }
+	 implementation 'org.jsoup:jsoup:1.14.1'
+	 implementation 'commons-io:commons-io:2.11.0'
 	
-	implementation 'io.micrometer:micrometer-registry-prometheus:1.7.2'
-	
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
